@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "jquery": "^3.7.1",
+    "npm": "^10.2.4",
+    "particle.js": "^1.0.7",
+    "particles.js": "^2.0.0"
+  }
+}

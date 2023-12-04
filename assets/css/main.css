@@ -1905,3 +1905,31 @@ input, select, textarea {
 			}
 
 		}
+
+/* Image container styling */
+#projects .image {
+	position: relative;
+	overflow: hidden;
+  }
+  
+  /* Caption styling for hover effect */
+  #projects .image .caption {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 0.5em;
+	background: rgba(0, 0, 0, 0.75); /* Adjust color and opacity as needed */
+	color: #ffffff;
+	font-size: 1em; /* Adjust as needed */
+	text-align: center;
+	opacity: 0;
+	-moz-transition: opacity 0.3s ease;
+	-webkit-transition: opacity 0.3s ease;
+	-ms-transition: opacity 0.3s ease;
+	transition: opacity 0.3s ease;
+  }
+  
+  #projects .image:hover .caption {
+	opacity: 1; /* Make the caption visible on hover */
+  }

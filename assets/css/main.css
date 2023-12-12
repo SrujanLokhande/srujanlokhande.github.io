@@ -1952,26 +1952,6 @@ input, select, textarea {
 	height: 100%;
   }
 
-/* Project Container */
-.project-container {
-    display: flex;
-    flex-direction: column;
-    align-items: start; /* Align items to the start of the container */
-}
-
-/* Row and Column Styles */
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-    align-items: start; /* Aligns the video and description to the top */
-}
-
-.row > * {
-    box-sizing: border-box;
-    padding: 15px;
-}
-
 /* Desktop layout */
 .col-6 {
     width: 50%; /* Each column takes up half the width */
@@ -1984,59 +1964,99 @@ input, select, textarea {
     height: 0;
 }
 
-/* Responsive Adjustments for Mobile */
-@media screen and (max-width: 736px) {
-    .col-6 {
-        width: 100%; /* Full width on smaller screens */
-    }
-
-    .video-container {
-        padding-bottom: 56.25%;
-    }
+.col-6 {
+    width: 50%;
+    padding: 15px; /* spacing inside columns */
 }
 
-@media screen and (min-width: 736px) {
-    .code-container {
-        width: 50%;
-    }
-    .code-snippet {
-        background: #f4f4f4; /* Or another color that matches your design */
-        padding: 15px;
-        margin-top: 20px;
-        border-radius: 4px;
-    }
-    .video-container iframe {
-        width: 100%;
-        height: auto; /* Adjust as necessary */
-    }
+
+.video-container iframe {
+    width: 100%;
+    height: auto; /* Adjust height to maintain aspect ratio */
 }
 
-@media screen and (max-width: 736px) {
-    .video-container, .code-container {
-        width: 100%;
-    }
-    .video-container iframe {
-        height: auto; /* Adjust as necessary */
-    }
-    .code-snippet {
-        background: #f4f4f4; /* Or another color that matches your design */
-        padding: 15px;
-        margin-top: 20px;
-        border-radius: 4px;
-    }
+.description-container {
+    padding: 15px;
+}
+
+.code-snippet-container {
+    background: #f4f4f4; /* Or another color that matches your design */
+    border-radius: 4px;
+    padding: 15px;
+    margin-top: 20px; /* space above code snippet */
 }
 
 /* Code snippet specific styles */
 pre {
     margin: 0;
-    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 0.8em;
-    overflow-x: auto;
+    overflow-x: auto; /* for horizontal scrolling */
 }
+
 code {
-    color: #333;
-    overflow-x: auto;
+    display: block; /* ensures proper block display */
+    white-space: pre; /* preserves whitespace */
+    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
 }
+
+@media screen and (max-width: 736px) {
+    .col-6, .col-12 {
+        width: 100%; /* Stack elements on smaller screens */
+    }
+    .video-container iframe {
+        height: auto; /* Adjust height to maintain aspect ratio */
+    }
+}
+/* Video Container */
+.video-container {
+    position: relative;
+    width: 100%;
+    /* Set the aspect ratio for the video */
+    /* This is the standard aspect ratio for HD video */
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Responsive Adjustments for Mobile */
+@media screen and (max-width: 736px) {
+    /* Ensure the video and description stack on top of each other */
+    .row .col-6, .row .col-12 {
+        width: 100%;
+    }
+    /* Reset any specific height for the video on smaller screens */
+    .video-container {
+        padding-top: 56.25%; /* Maintain the aspect ratio */
+    }
+}
+
+/* Additional Styles */
+.description-container, .code-snippet-container {
+    padding: 15px;
+} 
+
+  /* Code snippet specific styles */
+  pre {	 
+	margin: 0;
+	overflow-x: auto; /* for horizontal scrolling */
+	background: #940000; /* background color for code block */
+	padding: 15px;
+	border-radius: 4px; /* Optional: for rounded corners */
+  }
+  
+  code {
+	display: block; /* ensures proper block display */
+	white-space: pre; /* preserves whitespace */
+	font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 0.9em;
+  }
+  
 
 
 

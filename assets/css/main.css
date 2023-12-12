@@ -1534,22 +1534,7 @@ input, select, textarea {
 				font-size: 0.8em;
 			}
 
-			#nav a:after {
-				content: '';
-				display: block;
-				position: absolute;
-				left: 50%;
-				bottom: -0.75em;
-				margin-left: -0.5em;
-				border-bottom: solid 0em #ffffff;
-				border-left: solid 0.5em transparent;
-				border-right: solid 0.5em transparent;
-				-moz-transition: border-bottom-width .25s ease-in-out;
-				-webkit-transition: border-bottom-width .25s ease-in-out;
-				-ms-transition: border-bottom-width .25s ease-in-out;
-				transition: border-bottom-width .25s ease-in-out;
-			}
-
+			
 			#nav a span {
 				display: block;
 				position: absolute;
@@ -1685,18 +1670,6 @@ input, select, textarea {
     left: 0;
 }    
 
-	/* #main {
-		position: relative;
-		overflow: hidden;
-		width: 100%;
-		background: #b0a695;
-		box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.25);
-		-moz-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-		-webkit-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-		-ms-transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-		transition: min-height 0.5s ease-in-out, max-height 0.5s ease-in-out;
-	} */
-
 		#main > .panel {
 			-moz-transition: opacity 0.25s ease-in-out;
 			-webkit-transition: opacity 0.25s ease-in-out;
@@ -1767,28 +1740,7 @@ input, select, textarea {
 						-webkit-object-position: center;
 						-ms-object-position: center;
 						object-position: center;
-					}
-
-					#main > .panel.intro .pic .arrow {
-						display: block;
-						position: absolute;
-						right: 0;
-						top: 50%;
-						margin-top: -1.375em;
-						width: 2.75em;
-						height: 2.75em;
-						background: #000;
-						background: rgba(0, 0, 0, 0.75);
-						color: #ffffff;
-						text-align: center;
-						line-height: 2.75em;
-						font-size: 1.5em;
-						z-index: 1;
-						-moz-transition: width .15s ease-in-out, padding-right .15s ease-in-out;
-						-webkit-transition: width .15s ease-in-out, padding-right .15s ease-in-out;
-						-ms-transition: width .15s ease-in-out, padding-right .15s ease-in-out;
-						transition: width .15s ease-in-out, padding-right .15s ease-in-out;
-					}
+					}					
 
 
 				#main > .panel.intro header {
@@ -1855,55 +1807,6 @@ input, select, textarea {
 
 				}
 
-/* Footer */
-
-	#footer {
-		color: rgba(255, 255, 255, 0.45);
-		text-align: center;
-		padding: 2em 0 0 0;
-		font-size: 0.75em;
-	}
-
-		#footer a {
-			color: #ddd;
-			color: rgba(255, 255, 255, 0.65);
-			-moz-transition: color .25s ease-in-out;
-			-webkit-transition: color .25s ease-in-out;
-			-ms-transition: color .25s ease-in-out;
-			transition: color .25s ease-in-out;
-		}
-
-			#footer a:hover {
-				color: white;
-			}
-
-		#footer .copyright {
-			list-style: none;
-			padding-left: 0;
-		}
-
-			#footer .copyright li {
-				display: inline-block;
-				padding-left: 1em;
-				margin-left: 1em;
-				border-left: solid 1px rgba(255, 255, 255, 0.25);
-				line-height: 1;
-			}
-
-				#footer .copyright li:first-child {
-					padding-left: 0;
-					margin-left: 0;
-					border-left: 0;
-				}
-
-		@media screen and (max-width: 736px) {
-
-			#footer .copyright li {
-				padding-left: 0.5em;
-				margin-left: 0.5em;
-			}
-
-		}
 
 /* Image container styling */
    .image {
@@ -1978,26 +1881,6 @@ input, select, textarea {
     padding: 15px;
 }
 
-.code-snippet-container {
-    background: #f4f4f4; /* Or another color that matches your design */
-    border-radius: 4px;
-    padding: 15px;
-    margin-top: 20px; /* space above code snippet */
-}
-
-/* Code snippet specific styles */
-pre {
-    margin: 0;
-    overflow-x: auto; /* for horizontal scrolling */
-}
-
-code {
-    display: block; /* ensures proper block display */
-    white-space: pre; /* preserves whitespace */
-    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 0.9em;
-}
-
 @media screen and (max-width: 736px) {
     .col-6, .col-12 {
         width: 100%; /* Stack elements on smaller screens */
@@ -2035,28 +1918,37 @@ code {
     }
 }
 
-/* Additional Styles */
-.description-container, .code-snippet-container {
-    padding: 15px;
-} 
-
   /* Code snippet specific styles */
-  pre {	 
-	margin: 0;
-	overflow-x: auto; /* for horizontal scrolling */
-	background: #000000; /* background color for code block */
-	padding: 15px;
-	border-radius: 4px; /* Optional: for rounded corners */
-  }
-  
-  code {
-	display: block; /* ensures proper block display */
-	white-space: pre; /* preserves whitespace */
-	font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
-	font-size: 0.9em;
-  }
+pre {
+    margin: 0;
+    padding: 1em; /* Adjust the padding to ensure the code isn't too close to the borders */
+    background: #1e1e1e; /* VS Code default dark theme background color */
+    color: #d4d4d4; /* Light grey color for the code text, similar to VS Code's default */
+    overflow-x: auto; /* for horizontal scrolling */
+    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    border-radius: 4px; /* Optional: for rounded corners */
+    box-shadow: 0 0 .5em rgba(0,0,0,.3); /* subtle shadow for depth */
+}
 
-  
+code {
+    display: block; 
+    white-space: pre; 
+    font-size: 0.9em; 
+    line-height: 1; 
+}
+pre code:before {
+    content: counter(line);
+    counter-increment: line;
+    display: inline-block;
+    width: 1em; /* Width of the gutter for line numbers */
+    padding-right: 0.5em;
+    margin-right: 0.5em;
+    color: #858585; /* Color for the line numbers */
+    text-align: right; /* Align the line numbers to the right */
+    border-right: 1px solid #333; /* Line to separate gutter from code */
+    margin-left: -3em; /* Align the gutter to the left of the code */
+}
+
 	.profile-pic img {
 		border-radius: 50%; /* Makes the image round */
 		width: 300px; /* Adjust the size as needed */
@@ -2082,10 +1974,3 @@ code {
 		font-size: 1.2em;
 		color: #ffffff; /* Subtitle color */
 	}
-	
-  
-
-
-
-
-

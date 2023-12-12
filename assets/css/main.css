@@ -1995,6 +1995,50 @@ input, select, textarea {
     }
 }
 
+@media screen and (min-width: 736px) {
+    .code-container {
+        width: 50%;
+    }
+    .code-snippet {
+        background: #f4f4f4; /* Or another color that matches your design */
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 4px;
+    }
+    .video-container iframe {
+        width: 100%;
+        height: auto; /* Adjust as necessary */
+    }
+}
+
+@media screen and (max-width: 736px) {
+    .video-container, .code-container {
+        width: 100%;
+    }
+    .video-container iframe {
+        height: auto; /* Adjust as necessary */
+    }
+    .code-snippet {
+        background: #f4f4f4; /* Or another color that matches your design */
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 4px;
+    }
+}
+
+/* Code snippet specific styles */
+pre {
+    margin: 0;
+    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.8em;
+    overflow-x: auto;
+}
+code {
+    color: #333;
+    overflow-x: auto;
+}
+
+
 
 
 

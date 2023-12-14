@@ -53,8 +53,8 @@
 										</div>
 										<div class="col-4 col-6-medium col-12-small">
 											<a href="#project2" class="image fit">
-												<img src="images/AngryBirds.png" alt="">
-												<div class="caption">Angry Birds Clone</div>
+												<img src="images/EscapeFromDungeon.png" alt="">
+												<div class="caption">Escape From Dungeon</div>
 											</a>
 										</div>
 										<div class="col-4 col-6-medium col-12-small">
@@ -96,7 +96,7 @@
 										<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/brlKceY_gT0?si=al9hLkHAPCW168ec" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 									</div>
 									<div class="col-6 description-container">
-										<p>RED-ROAD  is a Third & First Person Cooperative Vehicle-Based Horror-Shooter for PC where players will take on the role of two survivors of a parasitic infection plaguing the lands of THE DEAD-ZONE.
+										<p>RED-ROAD is a Third & First Person Cooperative Vehicle-Based Horror-Shooter for PC where players will take on the role of two survivors of a parasitic infection plaguing the lands of THE DEAD-ZONE.
 											Using the PILLBUG, a heavily armoured vehicle they will swap between shooting & driving while attempting to reach and destroy the FLESH-MOTHER, the heart of the infection!</p>
 									</div>
 								</div>
@@ -130,22 +130,35 @@ function exampleFunction() {
 
 							<article id="project2" class="panel">
 								<header>
-									<h2>Angry Birds Clone</h2>
+									<h2>Escape From Dungeon</h2>
 								</header>
 								<!-- First row for video and description -->
 								<div class="row">
 									<div class="col-6 video-container">
 										<!-- YouTube video embed -->
-										<iframe src="https://www.youtube.com/embed/QdBZY2fkU-0" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+										<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/cM2l3TJIeZs?si=i70lbYmfCL2hXrOT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 									</div>
 									<div class="col-6 description-container">
-										<p>This is the description of Project 1. Here you can add details about the project, technologies used, challenges faced, and other relevant information.</p>
+										<p>Escape From Dungeon is a Third Person melee combat game for PC which was one of my early projects that I made using Unreal Engine C++ to learn the core concepts of Gameplay ,UI, AI and various programming concepts
+											such as interfaces, strcuts, polymorphism inheritance and multithreading used in Unreal Engine.
+										</p>
 									</div>
 								</div>
+
+								<section class="roles-responsibilities">
+									<h3>Roles and Responsibilities</h3>
+									<ul>
+										<li>Implemented game mechanics and systems in Unreal Engine 4 using C++, including character creation, animations, and user input.</li>
+										<li>Developed a fully functional melee combat game with features such as enemy behavior, item management, and health/stamina bars.</li>
+										<li>Designed interactive menus, including a Pause menu, and implemented game data saving/loading functionality.</li>
+										<li>Created immersive gameplay elements like floating platforms, timers, trigger volumes, and hazards.</li>
+										<li>Utilized C++ concepts for game development, expanding skills and knowledge in Unreal Engine.</li>
+									</ul>
+								</section>
 								<!-- Second row for code snippet and its description -->
 								<div class="row">
 									<div class="code-description">
-										<h3>Code Snippet Description</h3>
+										<h3>Code Snippet</h3>
 										<p>This section describes the functionality of the following code snippet.</p>
 									  </div>
 									<div class="col-12 code-snippet-container">										
@@ -167,23 +180,71 @@ function exampleFunction() {
 								<div class="row">
 									<div class="col-6 video-container">
 										<!-- YouTube video embed -->
-										<iframe src="https://www.youtube.com/embed/QdBZY2fkU-0" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+										<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/ULke8kj-ynk?si=3F6sCRWska7GTyWY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 									</div>
 									<div class="col-6 description-container">
-										<p>This is the description of Project 1. Here you can add details about the project, technologies used, challenges faced, and other relevant information.</p>
+										<p>Snake Game is a clone of the original Snake Game which I made entirely using C++ to learn the concepts of C++ programming.</p>
 									</div>
 								</div>
 								<!-- Second row for code snippet and its description -->
 								<div class="row">
 									<div class="code-description">
-										<h3>Code Snippet Description</h3>
-										<p>This section describes the functionality of the following code snippet.</p>
+										<h3>Code Snippets</h3>
+										<p>Game Renderer</p>
 									  </div>
 									<div class="col-12 code-snippet-container">										
 										<!-- Code snippet -->
 										<pre><code class="language-javascript">
-function exampleFunction() {
-	console.log("Hello, World!");
+// Initialize the game board with empty spaces and walls
+for (int i = 0; i < SCREEN_HEIGHT; i++)
+{
+	for (int j = 0; j < SCREEN_WIDTH; j++)
+	{
+		if (i == 0 || i == SCREEN_HEIGHT - 1 || j == 0 || j == SCREEN_WIDTH - 1) {
+			board[i][j] = WALL;
+		}
+		else {
+			board[i][j] = EMPTY;
+		}
+	}
+}
+										</code></pre>
+										<p>Wall Collision</p>
+									  </div>
+									<div class="col-12 code-snippet-container">										
+										<!-- Code snippet -->
+										<pre><code class="language-javascript">
+bool Snake::WallCollision()
+{
+	// if the snake touches the bounds
+	if (snakePosition.Y < 1 || snakePosition.Y > SCREEN_HEIGHT - 2) 
+	{
+		return true;
+	}
+
+	// if the snake collides with the side walls then spawn from the opposite wall
+	if (snakePosition.X > SCREEN_WIDTH - 2)          
+	{
+		snakePosition.X = 0;
+		return false;
+	}
+
+	// if the snake collides with the side walls then spawn from the opposite wall
+	if (snakePosition.X < 1)                            
+	{
+		snakePosition.X = SCREEN_WIDTH - 2;
+		return false;
+	}
+
+	for (int i = 0; i < snakeLength - 1; i++)
+	{
+		// if the snake collides with its own body part
+		if (snakePosition.X == body[i].X && snakePosition.Y == body[i].Y)                       
+		{
+			return true;
+		}
+	}
+	return false;
 }
 										</code></pre>
 									  </div>

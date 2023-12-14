@@ -105,24 +105,167 @@
 									<h3>Roles and Responsibilities</h3>
 									<ul>
 										<li>Implemented the Networking aspect of the game by using SteamSubSystem</li>
-										<li>Role or Responsibility #2</li>
-										<li>Role or Responsibility #3</li>
-										<li>Role or Responsibility #3</li>
+										<li>Implemented the dynamic UI using Slate</li>
+										<li>Implemented the custom AI behaviour needed for the game</li>
+										<li>Implemented the core gameplay loop and systems</li>
 									</ul>
 								</section>
 								<!-- Second row for code snippet and its description -->
 								<div class="row">
 									<div class="code-description">
 										<h3>Code Snippets</h3>
-										<p>This section describes the functionality of the following code snippet.</p>
+										<p>Slate UI Loading Screen </p>
 									  </div>
 									<div class="col-12 code-snippet-container">										
 										<!-- Code snippet -->
 										<pre><code class="language-javascript">
-function exampleFunction() {
-	console.log("Hello, World!");
+SAssignNew(ProgressBarRef, SProgressBar)
+.Percent(CurrentProgressBarFill)
+//.Style(&ProgressBarStyle)
+.BarFillType(EProgressBarFillType::LeftToRight);
+
+SAssignNew(LoadingTextBlockRef, STextBlock)
+.Text(Settings->LoadingBarTexts[CurrentTextIndex])
+.Font(Settings->LoadingBarTextFont)
+.ColorAndOpacity(Settings->FontColor);
+
+ChildSlot[
+	SNew(SOverlay)
+	+SOverlay::Slot()
+	.HAlign(HAlign_Fill)
+	.VAlign(VAlign_Fill)
+	[
+		SNew(SImage)
+		.Image(&BackgroundBrush)
+	]
+	+SOverlay::Slot()
+	.HAlign(HAlign_Center)
+	.VAlign(VAlign_Center)
+	.Padding(200.0f, 200.0f, 200.0f, 200.0f)
+	[
+		ImageSwitcherRef.ToSharedRef()
+	]
+										</code></pre>
+										<p>Enemy AI Spwaning</p>
+									  </div>
+									<div class="col-12 code-snippet-container">										
+										<!-- Code snippet -->
+										<pre><code class="language-javascript">
+if(CurrentEnemySpawnned >= EnemiesToSpawn)
+{
+	GetWorld()->GetTimerManager().ClearTimer(SpawnTimerHandle);
+	return;
+}
+AnglebetweenEnemies = 360.0f / EnemiesToSpawn;	
+const float AngleInDegrees = CurrentEnemySpawnned * AnglebetweenEnemies;
+const float AngleInRadians = FMath::DegreesToRadians(AngleInDegrees);
+
+//Calculate the position of each enemy around the circle
+FVector EnemyPosition;
+EnemyPosition.X = EnemySpawnLocation.X + CircleRadius * cos(AngleInRadians);
+EnemyPosition.Y = EnemySpawnLocation.Y + CircleRadius * sin(AngleInRadians);
+EnemyPosition.Z = EnemySpawnLocation.Z;
+
+if(Vehicle.IsValid())
+{
+	const FVector CarLocation = Vehicle->GetActorLocation();	
+	const FRotator EnemyRotation = (CarLocation - EnemyPosition).Rotation();
+	
+	ClosestSpawner->SpawnEnemy(MaxEnemyCount, EnemyPosition, EnemyRotation);
+	++CurrentEnemySpawnned;
+	++SpawnedEnemyCount;		
 }
 										</code></pre>
+										<p>Loading Screen Between Maps</p>
+									</div>
+								  <div class="col-12 code-snippet-container">										
+									  <!-- Code snippet -->
+									  <pre><code class="language-javascript">
+void URedRoadGameInstance::BeginLoadingScreen(const FString& Mapname)
+{
+	GetMoviePlayer()->WaitForMovieToFinish();
+
+	SlateLoadingScreenInstance = nullptr;
+	LoadingScreen = FLoadingScreenAttributes();
+
+	LoadingScreen.bAutoCompleteWhenLoadingCompletes = true;
+	LoadingScreen.bMoviesAreSkippable = false;
+	LoadingScreen.bWaitForManualStop = false;	
+	LoadingScreen.MinimumLoadingScreenDisplayTime = 10.0f;	
+
+	SlateLoadingScreenInstance = SNew(URedRoadLoadingScreen);	
+	LoadingScreen.WidgetLoadingScreen = SlateLoadingScreenInstance.ToSharedRef();
+	
+	// LoadingScreen.WidgetLoadingScreen = FLoadingScreenAttributes::NewTestLoadingScreenWidget();
+	// if(LoadingScreen.IsValid())
+	// {
+	// 	CurrentWidget = CreateWidget<UUserWidget>(this, LoadingWidget);
+	// 	TSharedPtr<SWidget> LoadScreen = CurrentWidget->TakeWidget();
+	// 	LoadingScreen.WidgetLoadingScreen = LoadScreen;
+	// }
+
+	GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+}
+									  </code></pre>
+									  <p>Create Server For Players to connect</p>
+									</div>
+								  <div class="col-12 code-snippet-container">										
+									  <!-- Code snippet -->
+									  <pre><code class="language-javascript">
+void URedRoadGameInstance::CreateServer(FString ServerName, FString HostName)
+{
+FCoreUObjectDelegates::PreLoadMap.AddUObject(this, &ThisClass::BeginLoadingScreen);
+FCoreUObjectDelegates::PostLoadMapWithWorld.AddUObject(this, &ThisClass::EndLoadingScreen);
+
+UE_LOG(LogTemp, Warning, TEXT("Session Created"));
+FOnlineSessionSettings SessionSettings;
+// allows to join in between of the session
+SessionSettings.bAllowJoinInProgress = true;
+SessionSettings.bUseLobbiesIfAvailable = true;
+
+// not using a dedicated server
+SessionSettings.bIsDedicated = false;
+
+// we are using steam so it is false
+if(IOnlineSubsystem::Get()->GetSubsystemName() != "NULL")
+{
+	UE_LOG(LogActor, Warning, TEXT("Calling the notNullFunction"));
+	SessionSettings.bIsLANMatch = false;		
+}
+
+else
+{
+	UE_LOG(LogActor, Warning, TEXT("Calling the NullFunction"));
+	SessionSettings.bIsLANMatch = true;
+}
+
+SessionSettings.bShouldAdvertise = true;
+SessionSettings.bUsesPresence = true;
+SessionSettings.NumPublicConnections = 2;
+
+// creating custom server and host name,
+SessionSettings.Set(FName("SERVER_NAME_KEY"), ServerName, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
+SessionSettings.Set(FName("SERVER_HOSTNAME_KEY"), HostName, EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
+
+// creating the session using ISessionInterface
+SessionInterface->CreateSession(0, DefaultSessionName, SessionSettings);
+}
+									  </code></pre>
+									  <p>To not destroy pawn whent the client left session</p>
+									</div>
+								  <div class="col-12 code-snippet-container">										
+									  <!-- Code snippet -->
+									  <pre><code class="language-javascript">
+void ARedRoadPlayerController::PawnLeavingGame()
+{
+	Super::PawnLeavingGame();
+	if(GetPawn() != NULL)
+	{
+		UnPossess();
+		SetPawn(NULL);
+	}
+}
+									  </code></pre>
 									  </div>
 								</div>
 							</article>
@@ -159,13 +302,183 @@ function exampleFunction() {
 								<div class="row">
 									<div class="code-description">
 										<h3>Code Snippet</h3>
-										<p>This section describes the functionality of the following code snippet.</p>
+										<p>Enemy AI Attacking</p>
 									  </div>
 									<div class="col-12 code-snippet-container">										
 										<!-- Code snippet -->
 										<pre><code class="language-javascript">
-function exampleFunction() {
-	console.log("Hello, World!");
+void AEnemy::Attack()
+{	
+	if(Alive() && bHasValidTarget)
+	{
+		if (AIController)
+		{
+			AIController->StopMovement();
+			SetEnemyMovementStatus(EEnemyMovementStatus::EMS_Attacking);
+		}
+		if (!bAttacking)
+		{
+			bAttacking = true;
+			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+			if (AnimInstance)
+			{
+				AnimInstance->Montage_Play(CombatMontage, 1.45f);
+				AnimInstance->Montage_JumpToSection(FName("Attack"), CombatMontage);
+			}
+		}
+	}	
+}
+										</code></pre>
+										<p>Player Melee Attacking</p>
+									  </div>
+									<div class="col-12 code-snippet-container">										
+										<!-- Code snippet -->
+										<pre><code class="language-javascript">
+void AMain::AttackDown()
+{
+	if (EquippedWeapon)
+	{
+		bEquipDown = false;
+		if (!bAttacking && MovementStatus != EMovementStatus::EMS_Dead)
+		{
+			bAttackDown = true;
+			bAttacking = true;
+			SetInterpToEnemy(true);
+
+			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+			if (AnimInstance && CombatMontage)
+			{
+				int32 Section = FMath::RandRange(0, 1);
+				switch (Section)
+				{
+				case 0:
+					AnimInstance->Montage_Play(CombatMontage, 1.85f);
+					AnimInstance->Montage_JumpToSection(FName("Attack_1"), CombatMontage);
+					break;
+				case 1:
+					AnimInstance->Montage_Play(CombatMontage, 1.8f);
+					AnimInstance->Montage_JumpToSection(FName("Attack_2"), CombatMontage);
+					break;
+				default:
+					;
+				}
+
+			}
+
+		}
+	}
+}
+										</code></pre>
+										<p>Save Game</p>
+									  </div>
+									<div class="col-12 code-snippet-container">										
+										<!-- Code snippet -->
+										<pre><code class="language-javascript">
+void AMain::SaveGame()
+{
+	UFirstSaveGame* SaveGameInstance = Cast<UFirstSaveGame>(UGameplayStatics::CreateSaveGameObject(UFirstSaveGame::StaticClass()));
+
+	SaveGameInstance->CharacterStats.Health = Health;
+	SaveGameInstance->CharacterStats.MaxHealth = MaxHealth;
+	SaveGameInstance->CharacterStats.Stamina = Stamina;
+	SaveGameInstance->CharacterStats.MaxStamina = MaxStamina;
+	SaveGameInstance->CharacterStats.Coins = coins;
+
+	FString MapName = GetWorld()->GetMapName();
+	MapName.RemoveFromStart(GetWorld()->StreamingLevelsPrefix);
+	
+	SaveGameInstance->CharacterStats.LevelName = MapName;
+
+	if (EquippedWeapon)
+	{
+		SaveGameInstance->CharacterStats.WeaponName = EquippedWeapon->Name;
+	}
+
+	SaveGameInstance->CharacterStats.Location = GetActorLocation();
+	SaveGameInstance->CharacterStats.Rotation = GetActorRotation();
+
+	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SaveGameInstance->PlayerName, SaveGameInstance->UserIndex);
+}
+										</code></pre>
+										<p>Load Game</p>
+									  </div>
+									<div class="col-12 code-snippet-container">										
+										<!-- Code snippet -->
+										<pre><code class="language-javascript">
+void AMain::LoadGame(bool SetPosition)
+{
+	UFirstSaveGame* LoadGameInstance = Cast<UFirstSaveGame>(UGameplayStatics::CreateSaveGameObject(UFirstSaveGame::StaticClass()));
+
+	LoadGameInstance = Cast<UFirstSaveGame>(UGameplayStatics::LoadGameFromSlot(LoadGameInstance->PlayerName, LoadGameInstance->UserIndex));
+
+	Health = LoadGameInstance->CharacterStats.Health;
+	MaxHealth = LoadGameInstance->CharacterStats.MaxHealth;
+	Stamina = LoadGameInstance->CharacterStats.Stamina;
+	MaxStamina = LoadGameInstance->CharacterStats.MaxStamina;
+	coins = LoadGameInstance->CharacterStats.Coins;
+
+	if (WeaponStorage)
+	{
+		AItemStorage* Weapons = GetWorld()->SpawnActor<AItemStorage>(WeaponStorage);
+		if (Weapons)
+		{
+			FString WeaponName = LoadGameInstance->CharacterStats.WeaponName;
+
+			if (Weapons->WeaponMap.Contains(WeaponName))
+			{
+				AWeapon* WeaponToEquip = GetWorld()->SpawnActor<AWeapon>(Weapons->WeaponMap[WeaponName]);
+				WeaponToEquip->Equip(this);
+			}			
+		}
+	}
+	if (SetPosition)
+	{
+		SetActorLocation(LoadGameInstance->CharacterStats.Location);
+		SetActorRotation(LoadGameInstance->CharacterStats.Rotation);
+	}
+	SetMovementStatus(EMovementStatus::EMS_Normal);
+	GetMesh()->bPauseAnims = false;
+	GetMesh()->bNoSkeletonUpdate = false;
+
+	if (LoadGameInstance->CharacterStats.LevelName != TEXT(""))
+	{
+		FName LevelName(*LoadGameInstance->CharacterStats.LevelName);
+
+		SwitchLevel(LevelName);
+	}
+}
+										</code></pre>
+										<p>Player Equip Weapon</p>
+									  </div>
+									<div class="col-12 code-snippet-container">										
+										<!-- Code snippet -->
+										<pre><code class="language-javascript">
+void AWeapon::Equip(AMain* Char)
+{
+	if (Char)
+	{
+		SetInstigator(Char->GetController());
+
+		SkeletalMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+		SkeletalMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+
+		SkeletalMesh->SetSimulatePhysics(false);
+
+		const USkeletalMeshSocket* RightHandSocket = Char->GetMesh()->GetSocketByName("RightHandSocket");
+		if (RightHandSocket)
+		{
+			RightHandSocket->AttachActor(this, Char->GetMesh());
+			bRotate = false;
+			Char->SetEquippedWeapon(this);
+			Char->SetActiveOverlappingItem(nullptr);
+		}
+		if (OnEquipSound) UGameplayStatics::PlaySound2D(this, OnEquipSound);
+		if (!bWeaponParticles)
+		{
+			IdleParticlesComponent->Deactivate();
+		}
+
+	}
 }
 										</code></pre>
 									  </div>

@@ -33,9 +33,8 @@ pre code:before {
 		border-radius: 50%; /* Makes the image round */
 		width: 300px; /* Adjust the size as needed */
 		height: auto;
-		display: block;
-		margin: 0 auto; /* Center the image */
-		margin-bottom: 0;
+		display: block;	
+		
 	}
 	
 	/* Introduction Styles */

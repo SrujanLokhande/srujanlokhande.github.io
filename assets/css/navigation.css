@@ -3,9 +3,7 @@
 #nav {
     text-align: center;
     height: 4.25em;
-    cursor: default;
-
-        margin-top: 0; /* Adjust this value to reduce the space */
+    cursor: default;       
 
 }
 

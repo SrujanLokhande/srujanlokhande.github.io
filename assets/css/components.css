@@ -1,28 +1,3 @@
-/* Table */
-
-table {
-    width: 100%;
-}
-
-    table.default tbody tr {
-        border-bottom: solid 1px #f4f4f4;
-    }
-
-    table.default td {
-        padding: 0.5em 1em 0.5em 1em;
-    }
-
-    table.default th {
-        text-align: left;
-        font-weight: 400;
-        padding: 0.5em 1em 0.5em 1em;
-    }
-
-    table.default thead {
-        border-bottom: solid 2px #f4f4f4;
-    }
-
-
 /* Image */
 
 .image {
@@ -31,33 +6,17 @@ table {
 
     .image img {
         display: block;
-        width: 100%;
+        width: 100%;        
     }
 
     .image.fit {
         display: block;
         width: 100%;
     }
-
-    .image.featured {
-        display: block;
-        width: 100%;
-        margin: 0 0 2em 0;
-    }
-
-    .image.left {
-        float: left;
-        margin: 0 2em 2em 0;
-    }
-
-    .image.centered {
-        display: block;
-        margin: 0 0 2em 0;
-    }
-
         .image.centered img {
             margin: 0 auto;
             width: auto;
+            margin-bottom: 0;
         }
 
 

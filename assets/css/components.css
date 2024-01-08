@@ -1,0 +1,150 @@
+/* Table */
+
+table {
+    width: 100%;
+}
+
+    table.default tbody tr {
+        border-bottom: solid 1px #f4f4f4;
+    }
+
+    table.default td {
+        padding: 0.5em 1em 0.5em 1em;
+    }
+
+    table.default th {
+        text-align: left;
+        font-weight: 400;
+        padding: 0.5em 1em 0.5em 1em;
+    }
+
+    table.default thead {
+        border-bottom: solid 2px #f4f4f4;
+    }
+
+
+/* Image */
+
+.image {
+    display: inline-block;
+}
+
+    .image img {
+        display: block;
+        width: 100%;
+    }
+
+    .image.fit {
+        display: block;
+        width: 100%;
+    }
+
+    .image.featured {
+        display: block;
+        width: 100%;
+        margin: 0 0 2em 0;
+    }
+
+    .image.left {
+        float: left;
+        margin: 0 2em 2em 0;
+    }
+
+    .image.centered {
+        display: block;
+        margin: 0 0 2em 0;
+    }
+
+        .image.centered img {
+            margin: 0 auto;
+            width: auto;
+        }
+
+
+
+/* List */
+
+ul {
+    list-style: disc;
+    padding-left: 1em;
+}
+
+    ul li {
+        padding-left: 0.5em;
+    }
+
+ol {
+    list-style: decimal;
+    padding-left: 1.25em;
+}
+
+    ol li {
+        padding-left: 0.25em;
+    }
+
+    /* Actions */
+
+	ul.actions {
+		list-style: none;
+		padding-left: 0;
+	}
+
+		ul.actions li {
+			display: inline-block;
+			padding-left: 0;
+			margin: 0 0 0 0.5em;
+		}
+
+			ul.actions li:first-child {
+				margin-left: 0;
+			}
+
+		@media screen and (max-width: 736px) {
+
+			ul.actions li {
+				display: block;
+				margin: 0.75em 0 0 0;
+			}
+
+				ul.actions li:first-child {
+					margin-top: 0;
+				}
+
+		}
+
+/* Icons */
+
+	.icon {
+		text-decoration: none;
+		position: relative;
+		text-decoration: none;
+	}
+
+		.icon:before {
+			-moz-osx-font-smoothing: grayscale;
+			-webkit-font-smoothing: antialiased;
+			display: inline-block;
+			font-style: normal;
+			font-variant: normal;
+			text-rendering: auto;
+			line-height: 1;
+			text-transform: none !important;
+			font-family: 'Font Awesome 5 Free';
+			font-weight: 400;
+		}
+
+		.icon.solid:before {
+			font-weight: 900;
+		}
+
+		.icon.brands:before {
+			font-family: 'Font Awesome 5 Brands';
+		}
+
+		.icon:before {
+			line-height: inherit;
+		}
+
+		.icon > .label {
+			display: none;
+		}
